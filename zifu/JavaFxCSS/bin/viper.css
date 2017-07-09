@@ -1,0 +1,41 @@
+.root{
+	-fx-background-color: #DC9656;
+	-fx-font-size:8 pt;
+}
+.label{
+	-fx-text-fill: #FEDCBA;
+}
+.button{
+	-fx-background-color: linear-gradient(# 86C1B9, #7CAFC2);
+	-fx-text-fill: #000000;
+	-fx-background-radius: 2;
+}
+.button-rainbow{
+	-fx-background-color: #FF00FF;
+	-fx-text-fill: #ff00ff;
+	-fx-background-radius: 8;
+}
+#bold-label{
+	-fx-font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

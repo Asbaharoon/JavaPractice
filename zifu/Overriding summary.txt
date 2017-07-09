@@ -1,0 +1,19 @@
+Animal-includes Bat, Dog, Cat, Bird, Whale, Fish, Horse
+Default: Includes Methods Eat + Walks_on_land
+
+
+Land
+Dog includes: Eat & Walks_on_land(DEFAULT)
+Horse includes: Eat & Walks_on_land(DEFAULT)
+Cat includes: Eat & Walks_on_land(DEFAULT)
+
+
+Air
+Bat includes: Eat & Walks_in_the_air(METHOD "Walks_on_land" OVERIDDEN . ALTERED TO "Walks_in_the_air". 1 CHANGE TO ENTITY NAME "BAT")
+Bird includes: Eat & Walks_in_the_air(METHOD "Walks_on_land" OVERIDDEN . ALTERED TO "Walks_in_the_air". 1 CHANGE TO ENTITY NAME "BIRD")
+
+
+
+Ocean
+Whale includes: Eat & Walks_in_the_ocean(METHOD "Walks_on_land" OVERIDDEN . ALTERED TO "Walks_in_the_ocean".1 CHANGE TO ENTITY NAME "WHALE")
+Fish includes: Eat & Walks_in_the_ocean(METHOD "Walks_on_land" OVERIDDEN . ALTERED TO "Walks_in_the_OCEAN".1 CHANGE TO ENTITY NAME "FISH")

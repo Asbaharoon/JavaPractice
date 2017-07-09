@@ -1,0 +1,4 @@
+interface separation principle
+j
+
+j j_ = new j();

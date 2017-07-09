@@ -1,0 +1,42 @@
+IPinkShoe{
+	public void PinkShoe(){
+		
+	}
+}
+class IRedShoe{
+	public void RedShoe(){
+		
+	}
+}
+class IOrangeShoe{
+	public void OrangeShoe();	
+}
+interface IYellowShoe{
+	public void YellowShoe();
+}
+interface IGreenShoe{
+	public void GreenShoe();
+}
+interface IBlueShoe{
+	public void BlueShoe();
+}
+interface IIndigoShoe{
+	public void IndigoShoe();
+}
+interface IPurpleShoe{
+	public void PurpleShoe();
+}
+interface IBlackShoe{
+	public void BlackShoe();
+}
+interface IWhiteShoe{
+	public void WhiteShoe();
+}
+interface IBrownShoe{
+	public void BrownShoe();
+}
+interface IGrayShoe{
+	public void GrayShoe();
+	}
+}
+
