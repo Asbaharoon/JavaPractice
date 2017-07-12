@@ -8,7 +8,7 @@ import renderEngine.entityRenderer;
 import shaders.staticShader;
 import terrains.terrain;
 import textures.modelTexture; 
-
+ 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
