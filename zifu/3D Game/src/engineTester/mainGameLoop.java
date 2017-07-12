@@ -7,14 +7,14 @@ import renderEngine.masterRenderer;
 import renderEngine.entityRenderer;
 import shaders.staticShader;
 import terrains.terrain;
-import textures.modelTexture;
+import textures.modelTexture; 
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.camera;
 import entities.entity;
-import entities.light;
+import entities.light; 
 import models.rawModel;
 import models.texturedModel;
 
