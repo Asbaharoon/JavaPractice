@@ -16,6 +16,9 @@ public class staticShader extends shaderProgram{
 	private int location_viewMatrix;
 	private int location_lightPosition;
 	private int location_lightColor;
+	private int location_shineDamper;
+	private int location_reflectivity;	
+	private int location_useFakeLighting;
 	
 	public staticShader(String vertexFile, String fragmentFile) {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -31,13 +34,25 @@ public class staticShader extends shaderProgram{
 
 	@Override
 	protected void getAllUniformLocations() {
-		location_transformationMatrix = super.getUniformLocation("transformationMatrix");
+		location_transformationMatrix = super.getUniformLocation("transformationMatrix");	
 		location_projectionMatrix = super.getUniformLocation("projectionMatrix");
 		location_viewMatrix = super.getUniformLocation("viewMatrix");
 		location_lightPosition = super.getUniformLocation("lightPosition");
 		location_lightColor = super.getUniformLocation("lightColor");
+		location_shineDamper = super.getUniformLocation("shineDamper");
+		location_reflectivity = super.getUniformLocation("reflectivity");
+		location_useFakeLighting = super.getUniformLocation("useFakeLighting");
 	}
 
+	public void loadFakeLightingVariable(boolean useFake) {
+		super.loadBoolean(location_useFakeLighting, useFake);
+	}
+	
+	public void loadShineVariables(float damper, float reflectivity) {
+		super.loadFloat(location_shineDamper, damper);
+		super.loadFloat(location_reflectivity, reflectivity);
+	}
+	
 	public void loadTransformationMatrix(Matrix4f matrix) {
 		super.loadMatrix(location_transformationMatrix, matrix);
 	}
