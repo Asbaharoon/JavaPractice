@@ -5,7 +5,9 @@ import renderEngine.displayManager;
 import renderEngine.loader;
 import renderEngine.masterRenderer;
 import terrains.terrain;
-import textures.modelTexture; 
+import textures.modelTexture;
+import textures.terrainTexture;
+import textures.terrainTexturePack;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
@@ -16,7 +18,8 @@ import java.util.Random;
 
 import entities.camera;
 import entities.entity;
-import entities.light; 
+import entities.light;
+import entities.player;
 import models.rawModel;
 import models.texturedModel;
 import objConverter.OBJFileLoader;
@@ -28,6 +31,16 @@ public class mainGameLoop {
 		displayManager.openDisplay();
 		loader Loader = new loader(); 
 	
+		terrainTexture backgroundTexture = new terrainTexture(Loader.loadTexture("grassy2"));
+		terrainTexture rTexture = new terrainTexture(Loader.loadTexture("mud"));
+		terrainTexture gTexture = new terrainTexture(Loader.loadTexture("pinkFlowers"));
+		terrainTexture bTexture = new terrainTexture(Loader.loadTexture("path"));
+		
+		terrainTexturePack texturePack = new terrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
+		
+		terrainTexture blendMap = new terrainTexture(Loader.loadTexture("blendMap"));
+		
+		
 		modelData ferndata = OBJFileLoader.loadOBJ("fern");
 		rawModel model = Loader.loadToVAO(ferndata.getVertices(), ferndata.getTextureCoords(), ferndata.getNormals(), ferndata.getIndices());	
 		texturedModel staticModel = new texturedModel(model, new modelTexture(Loader.loadTexture("fern")));
@@ -44,7 +57,7 @@ public class mainGameLoop {
 		Random random = new Random();
 		
 		for(int i = 0; i < 500; i++) {
-			entities.add(new entity(staticModel, new Vector3f(random.nextFloat() * 800 - 400, 0, random.nextFloat() * -600), 0, 0, 0, 0.5f));
+			
 			entities.add(new entity(treeModel, new Vector3f(random.nextFloat() * 800 - 400, 0, random.nextFloat() * -600), 0, 0, 0, 0.4f));
 			entities.add(new entity(grassyModel, new Vector3f(random.nextFloat() * 800 - 400, 0, random.nextFloat() * -600), 0, 0, 0, 1.5f));		
 		}
@@ -57,18 +70,26 @@ public class mainGameLoop {
 		Texture.setReflectivity(1);
 		
 		entity Entity = new entity(TexturedModel, new Vector3f(10,0,-2),0,0,0,1);
-		light Light = new light(new Vector3f(3000, 2000, 2000), new Vector3f(0.2f, 0f, 1f));
+		light Light = new light(new Vector3f(3000, 2000, 2000), new Vector3f(1f, 1f, 1f));
 	
-		terrain Terrain = new terrain(0, -1, Loader, new modelTexture(Loader.loadTexture("grassy")));
-		terrain Terrain2 = new terrain(-1, -1, Loader, new modelTexture(Loader.loadTexture("grassy")));
+		terrain Terrain = new terrain(0, -1, Loader,texturePack, blendMap);
+		terrain Terrain2 = new terrain(-1, -1, Loader, texturePack, blendMap);
 		
-		camera Camera = new camera();
-
+	
 		masterRenderer renderer = new masterRenderer();
+		
+		rawModel bunnyModel = OBJLoader.loadOBJFile("bunny", Loader);
+		texturedModel bunny = new texturedModel(bunnyModel, new modelTexture(Loader.loadTexture("white")));
+		
+		player Player = new player(bunny, new Vector3f(100, 5, -50), 0, 0, 0, 1);
+	
+		camera Camera = new camera(Player);
+				
 		while (!Display.isCloseRequested()) {
-			Entity.increasePosition(0, 0, 0);
-			Entity.increaseRotation(0, 0, 0);
+		
 			Camera.move();
+			Player.move();
+			renderer.processEntity(Player);
 			renderer.processTerrain(Terrain);
 			renderer.processTerrain(Terrain2);
 				for(entity object: entities) {

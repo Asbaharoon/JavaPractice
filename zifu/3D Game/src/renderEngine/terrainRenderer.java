@@ -15,6 +15,7 @@ import models.texturedModel;
 import shaders.terrainShader;
 import terrains.terrain;
 import textures.modelTexture;
+import textures.terrainTexturePack;
 import toolbox.math;
 
 public class terrainRenderer {
@@ -25,6 +26,7 @@ public class terrainRenderer {
 		this.shader = shader;
 		shader.start();
 		shader.loadProjectionMatrix(projectionMatrix);
+		shader.connectTextureUnits();
 		shader.stop();
 	}	
 	
@@ -35,6 +37,7 @@ public class terrainRenderer {
 			GL11.glDrawElements(GL11.GL_TRIANGLES, Terrain.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT,0);
 			unbindTexturedModel();
 		}
+
 	}
 	
 	private static void prepareTerrain(terrain Terrain) {
@@ -43,11 +46,24 @@ public class terrainRenderer {
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(1);
 		GL20.glEnableVertexAttribArray(2);		
-		modelTexture texture = Terrain.getTexture(); 	
-		shader.loadShineVariables(texture.getShineDamper(), texture.getReflectivity());
-		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getID());
+		bindTextures(Terrain);
+		shader.loadShineVariables(1, 0);
+	
 		GL11.glDrawElements(GL11.GL_TRIANGLES, rawModel.getVertexCount(), GL11.GL_UNSIGNED_INT,0);
+	}
+	
+	private static void bindTextures(terrain Terrain) {
+		terrainTexturePack texturePack = Terrain.getTexturePack();
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturePack.getBackgroundTexture().getTextureID());
+		GL13.glActiveTexture(GL13.GL_TEXTURE1);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturePack.getrTexture().getTextureID());
+		GL13.glActiveTexture(GL13.GL_TEXTURE2);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturePack.getgTexture().getTextureID());
+		GL13.glActiveTexture(GL13.GL_TEXTURE3);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturePack.getbTexture().getTextureID());
+		GL13.glActiveTexture(GL13.GL_TEXTURE4);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, Terrain.getBlendMap().getTextureID());
 	}
 	
 	private static void unbindTexturedModel() {
