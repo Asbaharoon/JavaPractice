@@ -1,6 +1,2 @@
-/shaders/
-/textures/
-/terrains/
-/engineTester/
-/renderEngine/
 /entities/
+/renderEngine/
