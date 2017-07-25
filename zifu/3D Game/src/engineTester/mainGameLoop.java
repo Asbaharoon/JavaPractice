@@ -72,15 +72,13 @@ public class mainGameLoop {
 		entity Entity = new entity(TexturedModel, new Vector3f(10,0,-2),0,0,0,1);
 		light Light = new light(new Vector3f(3000, 2000, 2000), new Vector3f(1f, 1f, 1f));
 	
-		terrain Terrain = new terrain(0, -1, Loader,texturePack, blendMap);
-		terrain Terrain2 = new terrain(-1, -1, Loader, texturePack, blendMap);
-		
+		terrain Terrain = new terrain(0, -1, Loader,texturePack, blendMap, "heightmap");	
 	
 		masterRenderer renderer = new masterRenderer();
 		
-		rawModel bunnyModel = OBJLoader.loadOBJFile("bunny", Loader);
+		rawModel bunnyModel = OBJLoader.loadOBJFile("person", Loader);
 		texturedModel bunny = new texturedModel(bunnyModel, new modelTexture(Loader.loadTexture("white")));
-		
+			
 		player Player = new player(bunny, new Vector3f(100, 5, -50), 0, 0, 0, 1);
 	
 		camera Camera = new camera(Player);
@@ -88,10 +86,9 @@ public class mainGameLoop {
 		while (!Display.isCloseRequested()) {
 		
 			Camera.move();
-			Player.move();
+			Player.move(Terrain);
 			renderer.processEntity(Player);
 			renderer.processTerrain(Terrain);
-			renderer.processTerrain(Terrain2);
 				for(entity object: entities) {
 					renderer.processEntity(object);
 				}

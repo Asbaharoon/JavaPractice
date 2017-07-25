@@ -15,9 +15,9 @@ public class player extends entity{
 	
 	private static final float TERRAIN_HEIGHT = 0;
 	
-	private static float currentSpeed = 0;
-	private static float currentTurnSpeed = 0;
-	private static float upwardSpeed = 0;
+	private float currentSpeed = 0;
+	private float currentTurnSpeed = 0;
+	private float upwardSpeed = 0;
 	
 	private boolean isInAir = false;
 	
@@ -25,7 +25,7 @@ public class player extends entity{
 		super(model, position, rotX, rotY, rotZ, scale);
 	}
 
-	public void move() {
+	public void move(terrains.terrain terrain ) {
 		checkInputs();
 		super.increaseRotation(0, currentTurnSpeed * displayManager.getFrameTimeSeconds(), 0);
 		float distance = currentSpeed * displayManager.getFrameTimeSeconds();
@@ -34,17 +34,18 @@ public class player extends entity{
 		super.increasePosition(dx, 0, dz);
 		upwardSpeed += GRAVITY *  displayManager.getFrameTimeSeconds();
 		super.increasePosition(0, upwardSpeed * displayManager.getFrameTimeSeconds(), 0);
-		if(super.getPosition().y < TERRAIN_HEIGHT) {
+		float terrainHeight = terrain.getHeightOfTerrain(super.getPosition().x, super.getPosition().x);
+		if(super.getPosition().y < terrainHeight) {
 			upwardSpeed = 0;
 			isInAir = false;
-			super.getPosition().y = TERRAIN_HEIGHT;
+			super.getPosition().y = terrainHeight;
 		}
 	}
 	
 	private void jump() {
 		if(!isInAir) {
 		this.upwardSpeed = JUMP_POWER;
-		isInAir = false;
+		isInAir = true;
 		}
 	}
 	
