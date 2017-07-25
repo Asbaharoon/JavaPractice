@@ -8,6 +8,7 @@ import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 public abstract class shaderProgram {
 
@@ -74,7 +75,12 @@ public abstract class shaderProgram {
 		GL20.glUniform3f(location, vector.x, vector.y, vector.z);
 		
 	}
-	
+
+	protected void load2DVector(int location, Vector2f vector) {
+		GL20.glUniform2f(location, vector.x, vector.y);
+		
+	}
+
 	protected void loadBoolean(int location, boolean value) {
 		float toLoad = 0;
 			if(value) {
