@@ -10,6 +10,7 @@ import textures.terrainTexture;
 import textures.terrainTexturePack;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ import entities.camera;
 import entities.entity;
 import entities.light;
 import entities.player;
+import guis.GUIRenderer;
+import guis.GUITexture;
 import models.rawModel;
 import models.texturedModel;
 import objConverter.OBJFileLoader;
@@ -83,6 +86,14 @@ public class mainGameLoop {
 	
 		camera Camera = new camera(Player);
 				
+		List<GUITexture> guis = new ArrayList<GUITexture>();
+		
+		GUITexture gui = new GUITexture(Loader.loadTexture("thinmatrix"), new Vector2f(0.5f, 0.5f), 0, 0, new Vector2f(0.25f, 0.25f));
+		
+		guis.add(gui);
+		
+		GUIRenderer guiRenderer = new GUIRenderer(Loader);
+		
 		while (!Display.isCloseRequested()) {
 		
 			Camera.move();
@@ -93,8 +104,10 @@ public class mainGameLoop {
 					renderer.processEntity(object);
 				}
 			renderer.render(Light, Camera);
+			guiRenderer.render(guis);
 			displayManager.updateDisplay();
 		}
+		guiRenderer.cleanUp();
 		renderer.cleanUp();
 		Loader.cleanUp();
 		displayManager.closeDisplay();
