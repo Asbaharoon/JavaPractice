@@ -73,8 +73,13 @@ public class mainGameLoop {
 		Texture.setReflectivity(1);
 		
 		entity Entity = new entity(TexturedModel, new Vector3f(10,0,-2),0,0,0,1);
-		light Light = new light(new Vector3f(3000, 2000, 2000), new Vector3f(1f, 1f, 1f));
-	
+		light Light = new light(new Vector3f(3000, 2000, 2000), new Vector3f(1f, 1f, 1f), new Vector3f(1, 0.2f, 0.5f));
+		List<light> Lights = new ArrayList<light>();
+		Lights.add(Light);
+		Lights.add(new light(new Vector3f(0, 0, 0), new Vector3f(0.6f, 0.6f, 0.2f), new Vector3f(1, 0.1f, 0.6f)));
+		Lights.add(new light(new Vector3f(-2, 0, 2), new Vector3f(0.6f, 0.6f, 0.2f), new Vector3f(1, 0.6f, 0.4f)));
+		Lights.add(new light(new Vector3f(6, 0, -4), new Vector3f(0.6f, 0.6f, 0.2f), new Vector3f(1, 0.7f, 0.3f)));
+		
 		terrain Terrain = new terrain(0, -1, Loader,texturePack, blendMap, "heightmap");	
 	
 		masterRenderer renderer = new masterRenderer();
@@ -103,7 +108,7 @@ public class mainGameLoop {
 				for(entity object: entities) {
 					renderer.processEntity(object);
 				}
-			renderer.render(Light, Camera);
+			renderer.render(Lights, Camera);
 			guiRenderer.render(guis);
 			displayManager.updateDisplay();
 		}
