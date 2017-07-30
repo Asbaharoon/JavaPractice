@@ -82,7 +82,7 @@ public class mainGameLoop {
 		
 		terrain Terrain = new terrain(0, -1, Loader,texturePack, blendMap, "heightmap");	
 	
-		masterRenderer renderer = new masterRenderer();
+		masterRenderer renderer = new masterRenderer(Loader);
 		
 		rawModel bunnyModel = OBJLoader.loadOBJFile("person", Loader);
 		texturedModel bunny = new texturedModel(bunnyModel, new modelTexture(Loader.loadTexture("white")));

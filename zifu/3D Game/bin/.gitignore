@@ -1,8 +1,5 @@
-/entities/
-/renderEngine/
-/terrains/
-/engineTester/
-/toolbox/
 /textures/
-/shaders/
+/renderEngine/
+/skybox/
 /guis/
+/engineTester/
