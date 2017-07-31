@@ -58,32 +58,47 @@ private static final float SIZE = 500f;
 	     SIZE, -SIZE,  SIZE
 	};
 	
-	private static String[] TEXTURE_FILES = {"right", "left", "top", "bottom", "back", "front"};
+	private static String[] DAY_TEXTURE_FILES = {"right", "left", "top", "bottom", "back", "front"};
+	private static String[] NIGHT_TEXTURE_FILES = {"nightRight", "nightLeft", "nightTop", "NightBottom", "NightBack", "NightFront"};
 	
 	private rawModel cube;
-	private int texture;
+	private int dayTexture;
+	private int nightTexture;
+	
 	private skyboxShader shader;
 	
 	public skyboxRenderer(loader Loader, Matrix4f projectionMatrix) {
 		cube = Loader.loadToVAO(VERTICES, 3);
-		texture = Loader.loadCubeMap(TEXTURE_FILES);
+		dayTexture = Loader.loadCubeMap(DAY_TEXTURE_FILES);
+		nightTexture = Loader.loadCubeMap(NIGHT_TEXTURE_FILES);
 		shader = new skyboxShader();
 		shader.start();
+		shader.connectTextureUnits();
 		shader.loadProjectionMatrix(projectionMatrix);
 		shader.stop();
 	}
 	
-	public void render(camera Camera) {
+	public void render(camera Camera, float r, float g, float b) {
 		shader.start();
 		shader.loadViewMatrix(Camera);
+		shader.loadFogColor(r, g, b);
 		GL30.glBindVertexArray(cube.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
-		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, texture);
+		bindTextures();
 		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, cube.getVertexCount());
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);
 		shader.stop();
 	}
+	
+	private void bindTextures() {
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, dayTexture);
+		GL13.glActiveTexture(GL13.GL_TEXTURE1);
+		GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, nightTexture);
+		shader.loadBlendFactor(0.5);
+	}
+	
+
 	
 } 

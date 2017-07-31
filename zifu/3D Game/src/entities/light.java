@@ -12,7 +12,7 @@ public class light {
 		this.position = position;
 		this.color = color;
 		this.attenuation = attenuation;
-	}
+	}  
 
 	public static Vector3f getAttenuation() {
 		return attenuation;
