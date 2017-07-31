@@ -8,6 +8,7 @@ import terrains.terrain;
 import textures.modelTexture;
 import textures.terrainTexture;
 import textures.terrainTexturePack;
+import toolbox.mousePicker;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector2f;
@@ -98,17 +99,16 @@ public class mainGameLoop {
 		guis.add(gui);
 		
 		GUIRenderer guiRenderer = new GUIRenderer(Loader);
+	
+		mousePicker picker = new mousePicker(Camera, renderer.getProjectionMatrix());
 		
 		while (!Display.isCloseRequested()) {
-		
-			Camera.move();
 			Player.move(Terrain);
-			renderer.processEntity(Player);
-			renderer.processTerrain(Terrain);
-				for(entity object: entities) {
-					renderer.processEntity(object);
-				}
-			renderer.render(Lights, Camera);
+			Camera.move();
+			
+			picker.update;
+			Vector3f terrainPoint picker.getCurrentTerrainPoint();
+			renderer.renderScene(Entities, Terrains, Lights, Camera);
 			guiRenderer.render(guis);
 			displayManager.updateDisplay();
 		}

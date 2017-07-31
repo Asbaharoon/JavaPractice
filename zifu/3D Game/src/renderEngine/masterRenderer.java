@@ -44,6 +44,10 @@ public class masterRenderer {
 		terrainRenderer = new terrainRenderer(terrainShader, projectionMatrix);
 	}
 	
+	public Matrix4f getProjectionMatrix() {
+		return projectionMatrix;
+	}
+	
 	public static void enableCulling() {
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glCullFace(GL11.GL_BACK);
@@ -51,6 +55,17 @@ public class masterRenderer {
 	
 	public static void disableCulling() {
 		GL11.glDisable(GL11.GL_CULL_FACE);
+	}
+	
+	public void renderScene(List<entity> Entities, List<terrain> Terrains, List<light> Lights, camera Camera) {
+		for(terrain Terrain: Terrains) {
+			processTerrain(Terrain);
+		}
+		for(entity Entity: Entities) {
+			processEntity(Entity);
+		}
+		render(Lights, Camera);
+		
 	}
 	
 	public void render(List<light> Lights, camera Camera) {
