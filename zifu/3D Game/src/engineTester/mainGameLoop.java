@@ -9,6 +9,10 @@ import textures.modelTexture;
 import textures.terrainTexture;
 import textures.terrainTexturePack;
 import toolbox.mousePicker;
+import water.waterFrameBuffers;
+import water.waterRenderer;
+import water.waterShader;
+import water.waterTile;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector2f;
@@ -102,16 +106,49 @@ public class mainGameLoop {
 	
 		mousePicker picker = new mousePicker(Camera, renderer.getProjectionMatrix());
 		
+		waterShader WaterShader = new watershader();
+		waterRenderer WaterRenderer = new waterRenderer(Loader, WaterShader, renderer.getProjectionMatrix());
+		List<waterTile> waters = new ArrayList<waterTile>();
+		waterTile water = new waterTile(0, 0, 0);
+		waters.add(water);
+		
+		waterFrameBuffers fbos = new waterFrameBuffers();
+		GUITexture reflection = new GUITexture(fbos.getReflectionTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
+		GUITexture refraction = new GUITexture(fbos.getRefractionTexture(), new Vector2f(-0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
+		GUITexture sceneGUI = new GUITexture(fbos.getReflectionTexture(), new Vector2f(-0.5f, 0.5f), new Vector2f(-0.5f, 0.5f));
+		guis.add(sceneGUI);
+		guis.add(reflection);
+		guis.add(refraction);
+		
 		while (!Display.isCloseRequested()) {
 			Player.move(Terrain);
 			Camera.move();
-			
 			picker.update;
-			Vector3f terrainPoint picker.getCurrentTerrainPoint();
-			renderer.renderScene(Entities, Terrains, Lights, Camera);
+			
+			GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
+			
+			fbos.bindReflectionFrameBuffer();
+			float distance = 2 * (Camera.getPosition().y - water.getHeight());
+			Camera.getPosition().y -= distance;
+			Camera.invertPitch();
+			renderer.renderScene(entities, Terrains, Lights, Camera, new Vector4f(0, 1f, 0, -water.getHeight()));
+			Camera.getPosition().y = += distance;
+			Camera.invertPitch();
+			
+			fbos.bindRefractionFrameBuffer();
+			renderer.renderScene(entities, terrains, Lights, Camera, new Vector4f(0, -1f, 0, water.getHeight()));
+		
+			GL11.glDisable(GL30.GL_CLIP_DISTANCE0); 
+			fbos.unbindCurrentFrameBuffer();
+			Vector3f terrainPoint  = picker.getCurrentTerrainPoint();
+			renderer.renderScene(entities, terrains, Lights, Camera, new Vector4f(0, -1f, 0, 100000	));
+			WaterRenderer.render(waters, camera);
 			guiRenderer.render(guis);
 			displayManager.updateDisplay();
 		}
+		
+		fbos.cleanUp();
+		WaterShader.cleanUp();
 		guiRenderer.cleanUp();
 		renderer.cleanUp();
 		Loader.cleanUp();

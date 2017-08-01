@@ -54,7 +54,7 @@ public class waterRenderer {
         shader.stop();
     }
  
-    private void setUpVAO(loader loader) {
+    private void setUpVAO(ler loader) {
         float[] vertices = { -1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, 1 };
         quad = loader.loadToVAO(vertices, 2);
     }

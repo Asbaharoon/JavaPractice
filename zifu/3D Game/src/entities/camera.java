@@ -31,6 +31,10 @@ public class camera {
 		this.yaw = 180 - (Player.getRotY() + angleAroundPlayer);
 	}
 
+	public void invertPitch() {
+		this.pitch = -pitch;
+	}
+	
 	public Vector3f getPosition() {
 		return position;
 	}

@@ -30,7 +30,7 @@ public class terrainShader extends shaderProgram{
 	private int location_gTexture;
 	private int location_bTexture;
 	private int location_blendMap;
-	
+	private int location_plane;
 	
 	public terrainShader(String vertexFile, String fragmentFile) {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -57,6 +57,7 @@ public class terrainShader extends shaderProgram{
 		location_gTexture = super.getUniformLocation("gTexture");
 		location_bTexture = super.getUniformLocation("bTexture");
 		location_blendMap = super.getUniformLocation("blendMap");
+		location_plane = super.getUniformLocation("plane");
 		
 		location_lightPosition = new int[MAX_LIGHTS];
 		location_lightColor = new int[MAX_LIGHTS];
@@ -75,6 +76,10 @@ public class terrainShader extends shaderProgram{
 		super.loadInt(location_gTexture, 2);
 		super.loadInt(location_bTexture, 3);
 		super.loadInt(location_blendMap, 4);
+	}
+	
+	public void loadClipPlane(Vector4f plane) {
+		super.load4DVector(location_plane, plane);
 	}
 	
 	public void loadSkyColor(float r, float g, float b) {
