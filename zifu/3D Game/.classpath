@@ -2,9 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LWJGL 2-9-3"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PNGDecoder"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SlickUtil"/>
-	<classpathentry kind="lib" path="C:/Users/gaofujie/Downloads/lwjgl-2.9.3 (1).zip"/>
-	<classpathentry kind="lib" path="C:/Users/gaofujie/Downloads/slick-util.zip"/>
-	<classpathentry kind="lib" path="C:/Users/gaofujie/Downloads/PNGDecoder.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
