@@ -1,11 +1,15 @@
 #version 400 core
 
 in vec4 clipSpace;
+in vec2 textureCoords;
 
 out vec4 out_Color;
 
 uniform sampler2D reflectionTexture;
-uniform sapler2D refractionTexture;
+uniform sampler2D refractionTexture;
+uniform sampler2D dudvMap;
+
+const float waveStrength = 0.02; 
 
 void main(void) {
 
@@ -13,6 +17,11 @@ void main(void) {
 	
 	vec2 reflectionTextureCoords = vec2(normalisedDeviceSpace.x, -normalisedDeviceSpace.y);
 	vec2 refractionTextureCoords = vec2(normalisedDeviceSpace.x, normalisedDeviceSpace.y);
+	
+	vec2 distortion = (texture(dudvMap, vec2(textureCoords.x, textureCoords.y)).rg * 2.0 - 1.0) * waveStrength;
+		
+	reflectionTextureCoords += distortion;
+	reflectionTextureCoords += distortion;
 		
 	vec4 reflectColor = texture(reflectionTexture, reflectionTextureCoords);
 	vec4 refractColor = texture(refractionTexture, refractionTextureCoords);

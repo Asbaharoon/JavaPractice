@@ -10,6 +10,7 @@ import org.lwjgl.opengl.*;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 public abstract class shaderProgram {
 
 	private int programID;
@@ -124,6 +125,7 @@ public abstract class shaderProgram {
 		
 			System.out.println(GL20.glGetShaderInfoLog(shaderID, 500));
 			System.err.println("Could not compile shader.");
+			System.err.println(file);
 			System.exit(-1);	
 		}
 		

@@ -5,6 +5,7 @@ import java.util.List;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 import entities.camera;
 import entities.light;
@@ -57,8 +58,8 @@ public class staticShader extends shaderProgram{
 		location_plane = super.getUniformLocation("plane");
 		
 		location_lightPosition = new int[MAX_LIGHTS];
-		location_lightPosition = new int[MAX_LIGHTS];
-		location_lightPosition = new int[MAX_LIGHTS];
+		location_lightColor = new int[MAX_LIGHTS];
+		location_attenuation = new int[MAX_LIGHTS];
 		for(int i = 0; i < MAX_LIGHTS; i++) {
 			location_lightPosition[i] = super.getUniformLocation("lightPosition[" + i + "]");
 			location_lightColor[i] = super.getUniformLocation("lightColor[" + i + "]");

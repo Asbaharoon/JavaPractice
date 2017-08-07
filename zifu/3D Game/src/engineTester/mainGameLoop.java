@@ -15,8 +15,11 @@ import water.waterShader;
 import water.waterTile;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +89,8 @@ public class mainGameLoop {
 		Lights.add(new light(new Vector3f(6, 0, -4), new Vector3f(0.6f, 0.6f, 0.2f), new Vector3f(1, 0.7f, 0.3f)));
 		
 		terrain Terrain = new terrain(0, -1, Loader,texturePack, blendMap, "heightmap");	
-	
+		List<terrain> terrains = new ArrayList<terrain>();
+		
 		masterRenderer renderer = new masterRenderer(Loader);
 		
 		rawModel bunnyModel = OBJLoader.loadOBJFile("person", Loader);
@@ -104,10 +108,10 @@ public class mainGameLoop {
 		
 		GUIRenderer guiRenderer = new GUIRenderer(Loader);
 	
-		mousePicker picker = new mousePicker(Camera, renderer.getProjectionMatrix());
+		mousePicker picker = new mousePicker(Camera, renderer.getProjectionMatrix(), Terrain);
 		
 		waterFrameBuffers fbos = new waterFrameBuffers();
-		waterShader WaterShader = new watershader();
+		waterShader WaterShader = new waterShader();
 		waterRenderer WaterRenderer = new waterRenderer(Loader, WaterShader, renderer.getProjectionMatrix(), fbos);
 		List<waterTile> waters = new ArrayList<waterTile>();
 		waterTile water = new waterTile(0, 0, 0);
@@ -117,7 +121,7 @@ public class mainGameLoop {
 		while (!Display.isCloseRequested()) {
 			Player.move(Terrain);
 			Camera.move();
-			picker.update;
+			picker.update();
 			
 			GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 			
@@ -125,8 +129,8 @@ public class mainGameLoop {
 			float distance = 2 * (Camera.getPosition().y - water.getHeight());
 			Camera.getPosition().y -= distance;
 			Camera.invertPitch();
-			renderer.renderScene(entities, Terrains, Lights, Camera, new Vector4f(0, 1f, 0, -water.getHeight()));
-			Camera.getPosition().y = += distance;
+			renderer.renderScene(entities, terrains, Lights, Camera, new Vector4f(0, 1f, 0, -water.getHeight()));
+			Camera.getPosition().y += distance;
 			Camera.invertPitch();
 			
 			fbos.bindRefractionFrameBuffer();	
@@ -135,8 +139,8 @@ public class mainGameLoop {
 			GL11.glDisable(GL30.GL_CLIP_DISTANCE0); 
 			fbos.unbindCurrentFrameBuffer();
 			Vector3f terrainPoint  = picker.getCurrentTerrainPoint();
-			renderer.renderScene(entities, terrains, Lights, Camera, new Vector4f(0, -1f, 0, 100000	));
-			WaterRenderer.render(waters, camera);
+			renderer.renderScene(entities, terrains, Lights, Camera, new Vector4f(0, -1f, 0, 100000));
+			WaterRenderer.render(waters, Camera);
 			guiRenderer.render(guis);
 			displayManager.updateDisplay();
 		}

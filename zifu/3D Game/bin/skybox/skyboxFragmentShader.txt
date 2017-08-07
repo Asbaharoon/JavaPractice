@@ -1,7 +1,7 @@
 #version 400
 
 in vec3 textureCoords;
-out vec4 out_Color;
+out vec4 outColor;
 
 uniform samplerCube cubeMapDay;
 uniform samplerCube cubeMapNight;
@@ -13,8 +13,8 @@ const float lowerLimit = 0.0;
 const float upperLimit = 30.0;	
 	
 void main(void){
-	vec4 textureDay = texture(cubeMapDay, textureCoords)
-	vec4 textureNight = texture(cubeMapNight, textureCoords)
+	vec4 textureDay = texture(cubeMapDay, textureCoords);
+	vec4 textureNight = texture(cubeMapNight, textureCoords);
     vec4 finalColor = mix(textureDay, textureNight, blendFactor);
 
 	float factor = (textureCoords.y - lowerLimit) / (upperLimit - lowerLimit);
