@@ -29,7 +29,7 @@ void main(void) {
 	reflectionTextureCoords.x = clamp(reflectionTextureCoords.x, 0.001, 0.999);
 	reflectionTextureCoords.y = clamp(reflectionTextureCoords.y, -0.999, -0.001);
 	
-	reflectionTextureCoords += distortion;
+	reflectionTextureCoords += totalDistortion;
 	refractionTextureCoords = clamp(refractionTextureCoords, 0.001, 0.999);
 		
 	vec4 reflectColor = texture(reflectionTexture, reflectionTextureCoords);
@@ -40,5 +40,5 @@ void main(void) {
 	refractiveFactor = pow(refractiveFactor, 10.0);
 	
 	out_Color = mix(reflectColor, refractColor, refractiveFactor);
-	out_Color = mix(outColor, vec4(0.0, 0.3, 0.5, 1), 0.2);
+	out_Color = mix(out_Color, vec4(0.0, 0.3, 0.5, 1), 0.2);
 }
