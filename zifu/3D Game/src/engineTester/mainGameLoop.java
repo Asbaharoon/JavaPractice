@@ -140,7 +140,7 @@ public class mainGameLoop {
 			fbos.unbindCurrentFrameBuffer();
 			Vector3f terrainPoint  = picker.getCurrentTerrainPoint();
 			renderer.renderScene(entities, terrains, Lights, Camera, new Vector4f(0, -1f, 0, 100000));
-			WaterRenderer.render(waters, Camera);
+			WaterRenderer.render(waters, Camera, Light);
 			guiRenderer.render(guis);
 			displayManager.updateDisplay();
 		}
