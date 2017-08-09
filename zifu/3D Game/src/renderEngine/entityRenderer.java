@@ -28,14 +28,14 @@ public class entityRenderer {
 			List<entity> batch = entities.get(model);
 			for(entity Entity: batch) {
 				prepareInstance(Entity);
-				GL11.glDrawElements(GL11.GL_TRIANGLES, model.getRawmodel().getVertexCount(), GL11.GL_UNSIGNED_INT,0);
+				GL11.glDrawElements(GL11.GL_TRIANGLES, model.getRawModel().getVertexCount(), GL11.GL_UNSIGNED_INT,0);
 			}
 			unbindTexturedModel();
 		}
 	}
 	
 	private static void prepareTexturedModel(texturedModel model) {
-		rawModel rawModel = model.getRawmodel();
+		rawModel rawModel = model.getRawModel();
 		GL30.glBindVertexArray(rawModel.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(1);
