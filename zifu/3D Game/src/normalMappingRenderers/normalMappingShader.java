@@ -14,8 +14,8 @@ public class normalMappingShader extends shaderProgram{
 
 	private static final int MAX_LIGHTS = 4;
      
-    private static final String VERTEX_FILE = "src/normalMappingRenderer/normalMapVShader.txt";
-    private static final String FRAGMENT_FILE = "src/normalMappingRenderer/normalMapFShader.txt";
+    private static final String VERTEX_FILE = "src/normalMappingRenderers/normalMapVertexShader.txt";
+    private static final String FRAGMENT_FILE = "src/normalMappingRenderers/normalMapFragmentShader.txt";
      
     private int location_transformationMatrix;
     private int location_projectionMatrix;
@@ -40,6 +40,7 @@ public class normalMappingShader extends shaderProgram{
         super.bindAttribute(0, "position");
         super.bindAttribute(1, "textureCoordinates");
         super.bindAttribute(2, "normal");
+        super.bindAttribute(3, "tangent");
     }
  
     @Override

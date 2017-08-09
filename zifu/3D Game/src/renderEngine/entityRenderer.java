@@ -22,7 +22,7 @@ public class entityRenderer {
 		shader.stop();
 	}
 	
-	public static void render(Map<texturedModel, List<entity>> entities) {
+	public void render(Map<texturedModel, List<entity>> entities) {
 		for(texturedModel model: entities.keySet()) {
 			prepareTexturedModel(model);
 			List<entity> batch = entities.get(model);

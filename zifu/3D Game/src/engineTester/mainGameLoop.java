@@ -33,6 +33,7 @@ import guis.GUIRenderer;
 import guis.GUITexture;
 import models.rawModel;
 import models.texturedModel;
+import normalMappingOBJConverter.normalMappedOBJLoader;
 import objConverter.OBJFileLoader;
 import objConverter.modelData;
 
@@ -65,6 +66,13 @@ public class mainGameLoop {
 		grassyModel.getTexture().setHasTransparency(true);
 		
 		List<entity> entities = new ArrayList<entity>();
+		List<entity> normalMapEntities = new ArrayList<entity>();
+		texturedModel barrelModel = new texturedModel(normalMappedOBJLoader.loadOBJ("barrel", Loader), new modelTexture(Loader.loadTexture("barrel")));
+		
+		barrelModel.getTexture().setShineDamper(10);
+		barrelModel.getTexture().setReflectivity(0.5f);
+		normalMapEntities.add(new entity(barrelModel, new Vector3f(75, 10, -75), 0, 0, 0, 1f));
+		
 		Random random = new Random();
 		
 		for(int i = 0; i < 500; i++) {
@@ -129,17 +137,17 @@ public class mainGameLoop {
 			float distance = 2 * (Camera.getPosition().y - water.getHeight());
 			Camera.getPosition().y -= distance;
 			Camera.invertPitch();
-			renderer.renderScene(entities, terrains, Lights, Camera, new Vector4f(0, 1f, 0, -water.getHeight() + 1f));
+			renderer.renderScene(entities, normalMapEntities, terrains, Lights, Camera, new Vector4f(0, 1f, 0, -water.getHeight() + 1f));
 			Camera.getPosition().y += distance;
 			Camera.invertPitch();
 			
 			fbos.bindRefractionFrameBuffer();	
-			renderer.renderScene(entities, terrains, Lights, Camera, new Vector4f(0, -1f, 0, water.getHeight() + 1f));
+			renderer.renderScene(entities, normalMapEntities, terrains, Lights, Camera, new Vector4f(0, -1f, 0, water.getHeight() + 1f));
 		
 			GL11.glDisable(GL30.GL_CLIP_DISTANCE0); 
 			fbos.unbindCurrentFrameBuffer();
 			Vector3f terrainPoint  = picker.getCurrentTerrainPoint();
-			renderer.renderScene(entities, terrains, Lights, Camera, new Vector4f(0, -1f, 0, 100000));
+			renderer.renderScene(entities, normalMapEntities, terrains, Lights, Camera, new Vector4f(0, -1f, 0, 100000));
 			WaterRenderer.render(waters, Camera, Light);
 			guiRenderer.render(guis);
 			displayManager.updateDisplay();
