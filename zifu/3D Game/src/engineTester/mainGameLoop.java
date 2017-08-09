@@ -129,12 +129,12 @@ public class mainGameLoop {
 			float distance = 2 * (Camera.getPosition().y - water.getHeight());
 			Camera.getPosition().y -= distance;
 			Camera.invertPitch();
-			renderer.renderScene(entities, terrains, Lights, Camera, new Vector4f(0, 1f, 0, -water.getHeight()));
+			renderer.renderScene(entities, terrains, Lights, Camera, new Vector4f(0, 1f, 0, -water.getHeight() + 1f));
 			Camera.getPosition().y += distance;
 			Camera.invertPitch();
 			
 			fbos.bindRefractionFrameBuffer();	
-			renderer.renderScene(entities, terrains, Lights, Camera, new Vector4f(0, -1f, 0, water.getHeight()));
+			renderer.renderScene(entities, terrains, Lights, Camera, new Vector4f(0, -1f, 0, water.getHeight() + 1f));
 		
 			GL11.glDisable(GL30.GL_CLIP_DISTANCE0); 
 			fbos.unbindCurrentFrameBuffer();
