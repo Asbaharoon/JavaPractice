@@ -67,8 +67,9 @@ public class mainGameLoop {
 		
 		List<entity> entities = new ArrayList<entity>();
 		List<entity> normalMapEntities = new ArrayList<entity>();
-		texturedModel barrelModel = new texturedModel(normalMappedOBJLoader.loadOBJ("barrel", Loader), new modelTexture(Loader.loadTexture("barrel")));
 		
+		texturedModel barrelModel = new texturedModel(normalMappedOBJLoader.loadOBJ("barrel", Loader), new modelTexture(Loader.loadTexture("barrel")));
+		barrelModel.getTexture().setNormalMap(Loader.loadTexture("barrelNormal"));
 		barrelModel.getTexture().setShineDamper(10);
 		barrelModel.getTexture().setReflectivity(0.5f);
 		normalMapEntities.add(new entity(barrelModel, new Vector3f(75, 10, -75), 0, 0, 0, 1f));

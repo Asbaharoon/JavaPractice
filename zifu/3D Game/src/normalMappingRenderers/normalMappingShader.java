@@ -30,6 +30,7 @@ public class normalMappingShader extends shaderProgram{
     private int location_offset;
     private int location_plane;
     private int location_modelTexture;
+    private int location_normalMap;
  
     public normalMappingShader(String vertexFile, String fragmentFile) {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -55,6 +56,7 @@ public class normalMappingShader extends shaderProgram{
         location_offset = super.getUniformLocation("offset");
         location_plane = super.getUniformLocation("plane");
         location_modelTexture = super.getUniformLocation("modelTexture");
+        location_normalMap = super.getUniformLocation("normalMap");
          
         location_lightPositionEyeSpace = new int[MAX_LIGHTS];
         location_lightColour = new int[MAX_LIGHTS];
@@ -68,6 +70,7 @@ public class normalMappingShader extends shaderProgram{
      
     protected void connectTextureUnits(){
         super.loadInt(location_modelTexture, 0);
+        super.loadInt(location_normalMap, 1);
     }
      
     protected void loadClipPlane(Vector4f plane){
