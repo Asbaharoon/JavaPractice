@@ -36,6 +36,15 @@ import textures.textureData;
 	 	return new rawModel(vaoID, indices.length);
 	}
 
+	public int loadToVAO(float[] positions, float[] textureCoords){
+		int vaoID = createVAO();
+		storeDataInAttributeList(0, 2, positions);
+		storeDataInAttributeList(1, 2, textureCoords);
+		unbindVAO();  
+	 	return vaoID;
+	}
+
+	
 	public rawModel loadToVAO(float[] positions, float[] textureCoords, float[] normals, float[] tangents, int[] indices){
 		int vaoID = createVAO();
 		bindIndicesBuffer(indices);
