@@ -2,6 +2,8 @@ package fontMeshCreator;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+
+import fontRendering.textMaster;
  
 public class GUIText {
  
@@ -29,11 +31,11 @@ public class GUIText {
         this.position = position;
         this.lineMaxSize = maxLineLength;
         this.centerText = centered;
-        // load text
+        textMaster.loadText(this);
     }
  
      public void remove() {
-        // remove text
+        textMaster.removeText(this);
     }
  
     public fontType getFont() {
@@ -44,7 +46,7 @@ public class GUIText {
         color.set(r, g, b);
     }
  
-    public Vector3f getColur() {
+    public Vector3f getColor() {
         return color;
     }
  

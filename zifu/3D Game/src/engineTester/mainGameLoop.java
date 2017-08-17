@@ -21,6 +21,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,6 +30,9 @@ import entities.camera;
 import entities.entity;
 import entities.light;
 import entities.player;
+import fontMeshCreator.GUIText;
+import fontMeshCreator.fontType;
+import fontRendering.textMaster;
 import guis.GUIRenderer;
 import guis.GUITexture;
 import models.rawModel;
@@ -42,34 +46,39 @@ public class mainGameLoop {
 	public static void main(String[] args) {
 		displayManager.openDisplay();
 		loader Loader = new loader(); 
-	
-		terrainTexture backgroundTexture = new terrainTexture(Loader.loadTexture("grassy2"));
-		terrainTexture rTexture = new terrainTexture(Loader.loadTexture("mud"));
-		terrainTexture gTexture = new terrainTexture(Loader.loadTexture("pinkFlowers"));
-		terrainTexture bTexture = new terrainTexture(Loader.loadTexture("path"));
+		textMaster.initiate(Loader);
+		
+		fontType font = new fontType(Loader.loadTexture("frankheavygoth", 0), new File("res/frankheavygoth.fnt"));
+		GUIText text = new GUIText("My text", 1, font, new Vector2f(0.5f, 0.5f), 0.5f, true);
+		text.setColor(0, 1, 0.2f);
+		
+		terrainTexture backgroundTexture = new terrainTexture(Loader.loadTexture("grassy2", -0.4f));
+		terrainTexture rTexture = new terrainTexture(Loader.loadTexture("mud", -0.4f));
+		terrainTexture gTexture = new terrainTexture(Loader.loadTexture("pinkFlowers", -0.4f));
+		terrainTexture bTexture = new terrainTexture(Loader.loadTexture("path", -0.4f));
 		
 		terrainTexturePack texturePack = new terrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
 		
-		terrainTexture blendMap = new terrainTexture(Loader.loadTexture("blendMap"));
+		terrainTexture blendMap = new terrainTexture(Loader.loadTexture("blendMap", -0.4f));
 		
 		
 		modelData ferndata = OBJFileLoader.loadOBJ("fern");
 		rawModel model = Loader.loadToVAO(ferndata.getVertices(), ferndata.getTextureCoords(), ferndata.getNormals(), ferndata.getIndices());	
-		texturedModel staticModel = new texturedModel(model, new modelTexture(Loader.loadTexture("fern")));
+		texturedModel staticModel = new texturedModel(model, new modelTexture(Loader.loadTexture("fern", -0.4f)));
 		modelData data = OBJFileLoader.loadOBJ("lowPolyTree");
 		rawModel testModel = Loader.loadToVAO(data.getVertices(), data.getTextureCoords(), data.getNormals(), data.getIndices());
-		texturedModel treeModel = new texturedModel(testModel, new modelTexture(Loader.loadTexture("lowPolyTree")));		
+		texturedModel treeModel = new texturedModel(testModel, new modelTexture(Loader.loadTexture("lowPolyTree", -0.4f)));		
 		modelData grassdata = OBJFileLoader.loadOBJ("grassModel");
 		rawModel grassModel = Loader.loadToVAO(grassdata.getVertices(), grassdata.getTextureCoords(), grassdata.getNormals(), grassdata.getIndices());
-		texturedModel grassyModel = new texturedModel(grassModel, new modelTexture(Loader.loadTexture("grassTexture")));
+		texturedModel grassyModel = new texturedModel(grassModel, new modelTexture(Loader.loadTexture("grassTexture", -0.4f)));
 		grassyModel.getTexture().setUseFakeLighting(true);
 		grassyModel.getTexture().setHasTransparency(true);
 		
 		List<entity> entities = new ArrayList<entity>();
 		List<entity> normalMapEntities = new ArrayList<entity>();
 		
-		texturedModel barrelModel = new texturedModel(normalMappedOBJLoader.loadOBJ("barrel", Loader), new modelTexture(Loader.loadTexture("barrel")));
-		barrelModel.getTexture().setNormalMap(Loader.loadTexture("barrelNormal"));
+		texturedModel barrelModel = new texturedModel(normalMappedOBJLoader.loadOBJ("barrel", Loader), new modelTexture(Loader.loadTexture("barrel", -0.4f)));
+		barrelModel.getTexture().setNormalMap(Loader.loadTexture("barrelNormal", -0.4f));
 		barrelModel.getTexture().setShineDamper(10);
 		barrelModel.getTexture().setReflectivity(0.5f);
 		normalMapEntities.add(new entity(barrelModel, new Vector3f(75, 10, -75), 0, 0, 0, 1f));
@@ -82,7 +91,7 @@ public class mainGameLoop {
 			entities.add(new entity(grassyModel, new Vector3f(random.nextFloat() * 800 - 400, 0, random.nextFloat() * -600), 0, 0, 0, 1.5f));		
 		}
 		
-		modelTexture texture = new modelTexture(Loader.loadTexture("white"));
+		modelTexture texture = new modelTexture(Loader.loadTexture("white", -0.4f));
 		texturedModel TexturedModel = new texturedModel(model, texture);
 		texturedModel TexturedTreeModel = new texturedModel(testModel, texture);
 		modelTexture Texture = TexturedModel.getTexture();
@@ -103,7 +112,7 @@ public class mainGameLoop {
 		masterRenderer renderer = new masterRenderer(Loader);
 		
 		rawModel bunnyModel = OBJLoader.loadOBJFile("person", Loader);
-		texturedModel bunny = new texturedModel(bunnyModel, new modelTexture(Loader.loadTexture("white")));
+		texturedModel bunny = new texturedModel(bunnyModel, new modelTexture(Loader.loadTexture("white", -0.4f)));
 			
 		player Player = new player(bunny, new Vector3f(100, 5, -50), 0, 0, 0, 1);
 	
@@ -111,7 +120,7 @@ public class mainGameLoop {
 				
 		List<GUITexture> guis = new ArrayList<GUITexture>();
 		
-		GUITexture gui = new GUITexture(Loader.loadTexture("thinmatrix"), new Vector2f(0.5f, 0.5f), 0, 0, new Vector2f(0.25f, 0.25f));
+		GUITexture gui = new GUITexture(Loader.loadTexture("thinmatrix", -0.4f), new Vector2f(0.5f, 0.5f), 0, 0, new Vector2f(0.25f, 0.25f));
 		
 		guis.add(gui);
 		
@@ -148,12 +157,14 @@ public class mainGameLoop {
 			GL11.glDisable(GL30.GL_CLIP_DISTANCE0); 
 			fbos.unbindCurrentFrameBuffer();
 			Vector3f terrainPoint  = picker.getCurrentTerrainPoint();
-			renderer.renderScene(entities, normalMapEntities, terrains, Lights, Camera, new Vector4f(0, -1f, 0, 100000));
+			renderer.renderScene(entities, normalMapEntities, terrains, Lights, Camera, new Vector4f(0, -1f, 0, 1));
 			WaterRenderer.render(waters, Camera, Light);
 			guiRenderer.render(guis);
 			displayManager.updateDisplay();
+			textMaster.render(); 
 		}
 		
+		textMaster.cleanUp();
 		fbos.cleanUp();
 		WaterShader.cleanUp();
 		guiRenderer.cleanUp();
