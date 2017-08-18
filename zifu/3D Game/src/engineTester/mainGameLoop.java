@@ -14,6 +14,7 @@ import water.waterRenderer;
 import water.waterShader;
 import water.waterTile;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
@@ -40,6 +41,8 @@ import models.texturedModel;
 import normalMappingOBJConverter.normalMappedOBJLoader;
 import objConverter.OBJFileLoader;
 import objConverter.modelData;
+import particles.particle;
+import particles.particleMaster;
 
 public class mainGameLoop {
 
@@ -47,6 +50,8 @@ public class mainGameLoop {
 		displayManager.openDisplay();
 		loader Loader = new loader(); 
 		textMaster.initiate(Loader);
+		masterRenderer renderer = new masterRenderer(Loader);
+		particleMaster.initiate(Loader, renderer.getProjectionMatrix());
 		
 		fontType font = new fontType(Loader.loadTexture("candara", 0), new File("res/candara.fnt"));
 		GUIText text = new GUIText("My text", 3, font, new Vector2f(0.5f, 0.5f), 0.5f, true);
@@ -109,7 +114,7 @@ public class mainGameLoop {
 		terrain Terrain = new terrain(0, -1, Loader,texturePack, blendMap, "heightmap");	
 		List<terrain> terrains = new ArrayList<terrain>();
 		
-		masterRenderer renderer = new masterRenderer(Loader);
+	
 		
 		rawModel bunnyModel = OBJLoader.loadOBJFile("person", Loader);
 		texturedModel bunny = new texturedModel(bunnyModel, new modelTexture(Loader.loadTexture("white", -0.4f)));
@@ -141,6 +146,9 @@ public class mainGameLoop {
 			Camera.move();
 			picker.update();
 			
+			
+			particleMaster.update();
+			
 			GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 			
 			fbos.bindReflectionFrameBuffer();
@@ -159,11 +167,15 @@ public class mainGameLoop {
 			Vector3f terrainPoint  = picker.getCurrentTerrainPoint();
 			renderer.renderScene(entities, normalMapEntities, terrains, Lights, Camera, new Vector4f(0, -1f, 0, 1));
 			WaterRenderer.render(waters, Camera, Light);
+			
+			particleMaster.renderParticles(Camera);
+			
 			guiRenderer.render(guis);
 			displayManager.updateDisplay();
 			textMaster.render(); 
 		}
 		
+		particleMaster.cleanUp();
 		textMaster.cleanUp();
 		fbos.cleanUp();
 		WaterShader.cleanUp();
