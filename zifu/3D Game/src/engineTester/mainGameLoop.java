@@ -43,6 +43,8 @@ import objConverter.OBJFileLoader;
 import objConverter.modelData;
 import particles.particle;
 import particles.particleMaster;
+import particles.particleSystem;
+import particles.particleTexture;
 
 public class mainGameLoop {
 
@@ -140,7 +142,15 @@ public class mainGameLoop {
 		waterTile water = new waterTile(0, 0, 0);
 		waters.add(water);
 		
-				
+		particleTexture ParticleTexture = new particleTexture(Loader.loadTexture("particleStar", -0.2f), 1);
+		
+		particleSystem system = new particleSystem(ParticleTexture, 40, 10, 0.1f, 1, 1, 1.6f);	
+		system.setLifeError(0.1f);
+		system.setSpeedError(0.2f);
+		system.setScaleError(0.5f);
+		system.randomizeRotation();
+		
+		
 		while (!Display.isCloseRequested()) {
 			Player.move(Terrain);
 			Camera.move();

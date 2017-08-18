@@ -1,8 +1,10 @@
 package particles;
  
 import java.util.List;
- 
+import java.util.Map;
+
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
@@ -28,13 +30,17 @@ public class particleRenderer {
     	shader.stop();
     }
      
-    protected void render(List<particle> particles, camera camera){
+    protected void render(Map<particleTexture, List<particle>> particles, camera camera){
     	Matrix4f viewMatrix = math.createViewMatrix(camera);
     	prepare();
-    	for(particle Particle : particles) {
-    		updateModelViewMatrix(Particle.getPosition(), Particle.getRotation(), Particle.getScale(), viewMatrix);
-    		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, quad.getVertexCount());
-    	}    	
+    	for(particleTexture texture : particles.keySet()) {
+    		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+    		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getTextureID());
+	    	for(particle Particle : particles.get(texture)) {
+	    		updateModelViewMatrix(Particle.getPosition(), Particle.getRotation(), Particle.getScale(), viewMatrix);
+	    		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, quad.getVertexCount());
+	    	}    	
+    	}
     	finishRendering();
     }
  
