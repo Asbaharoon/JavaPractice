@@ -48,8 +48,8 @@ public class mainGameLoop {
 		loader Loader = new loader(); 
 		textMaster.initiate(Loader);
 		
-		fontType font = new fontType(Loader.loadTexture("frankheavygoth", 0), new File("res/frankheavygoth.fnt"));
-		GUIText text = new GUIText("My text", 1, font, new Vector2f(0.5f, 0.5f), 0.5f, true);
+		fontType font = new fontType(Loader.loadTexture("candara", 0), new File("res/candara.fnt"));
+		GUIText text = new GUIText("My text", 3, font, new Vector2f(0.5f, 0.5f), 0.5f, true);
 		text.setColor(0, 1, 0.2f);
 		
 		terrainTexture backgroundTexture = new terrainTexture(Loader.loadTexture("grassy2", -0.4f));

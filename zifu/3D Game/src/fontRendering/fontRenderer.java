@@ -47,7 +47,13 @@ public class fontRenderer {
     	GL20.glEnableVertexAttribArray(0);
     	GL20.glEnableVertexAttribArray(1);
     	shader.loadColor(text.getColor());
+    	shader.loadOutlineColor(text.getOutlineColor());
     	shader.loadTranslation(text.getPosition());
+    	shader.loadWidth(text.getWidth());
+    	shader.loadBorderWidth(text.getBorderWidth());
+    	shader.loadEdge(text.getEdge());
+    	shader.loadBorderEdge(text.getBorderEdge());
+    	shader.loadOffset(text.getOffset());
     	GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, text.getVertexCount());
     	GL20.glDisableVertexAttribArray(0);
     	GL20.glDisableVertexAttribArray(1);

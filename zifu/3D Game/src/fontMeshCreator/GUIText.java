@@ -12,8 +12,18 @@ public class GUIText {
  
     private int textMeshVao;
     private int vertexCount;
+    
     private Vector3f color = new Vector3f(0f, 0f, 0f);
- 
+    private Vector3f outlineColor = new Vector3f(0f, 0f, 0f);
+    
+    private float width;
+    private float borderWidth;
+    
+    private float edge;
+    private float borderEdge;
+    
+    private Vector2f offset;
+    
     private Vector2f position;
     private float lineMaxSize;
     private int numberOfLines;
@@ -90,4 +100,52 @@ public class GUIText {
     protected String getTextString() {
         return textString;
     }
+
+	public Vector3f getOutlineColor() {
+		return outlineColor;
+	}
+
+	public void setOutlineColor(Vector3f outlineColor) {
+		this.outlineColor = outlineColor;
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
+	}
+
+	public float getBorderWidth() {
+		return borderWidth;
+	}
+
+	public void setBorderWidth(float borderWidth) {
+		this.borderWidth = borderWidth;
+	}
+
+	public float getEdge() {
+		return edge;
+	}
+
+	public void setEdge(float edge) {
+		this.edge = edge;
+	}
+
+	public float getBorderEdge() {
+		return borderEdge;
+	}
+
+	public void setBorderEdge(float borderEdge) {
+		this.borderEdge = borderEdge;
+	}
+
+	public Vector2f getOffset() {
+		return offset;
+	}
+
+	public void setOffset(Vector2f offset) {
+		this.offset = offset;
+	}    
 }
