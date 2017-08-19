@@ -21,14 +21,14 @@ public class particleMaster {
 		renderer = new particleRenderer(Loader, projectionMatrix);
 	}
 	
-	public static void update() {
+	public static void update(camera Camera) {
 		Iterator<Entry<particleTexture, List<particle>>> mapIterator = particles.entrySet().iterator();
 		while(mapIterator.hasNext()) {
 			List<particle> list = mapIterator.next().getValue();
 			Iterator<particle> iterator = list.iterator();	 
 			while(iterator.hasNext()) {
 				particle Particle = iterator.next();
-				boolean stillAlive = Particle.update();
+				boolean stillAlive = Particle.update(Camera);
 				if(!stillAlive) {
 					iterator.remove();
 					if(list.isEmpty()) {

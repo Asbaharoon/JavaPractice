@@ -38,6 +38,7 @@ public class particleRenderer {
     		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getTextureID());
 	    	for(particle Particle : particles.get(texture)) {
 	    		updateModelViewMatrix(Particle.getPosition(), Particle.getRotation(), Particle.getScale(), viewMatrix);
+	    		shader.loadTextureCoordInfo(Particle.getTextureOffset(), Particle.getNextTextureOffset(), texture.getNumberOfRows(), Particle.getBlend());
 	    		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, quad.getVertexCount());
 	    	}    	
     	}
@@ -70,7 +71,7 @@ public class particleRenderer {
     	shader.start();
     	GL30.glBindVertexArray(quad.getVaoID());
     	GL20.glEnableVertexAttribArray(0);
-    	GL11.glEnable(GL11.GL_BLEND);
+    	GL11.glEnable(GL11.GL_BLEND);	
     	GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     	GL11.glDepthMask(false);
     }

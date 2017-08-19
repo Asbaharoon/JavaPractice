@@ -1,13 +1,18 @@
 #version 140
 
 in vec2 textureCoords;
+in vec2 nextTextureCoords;
+in blend;
 
-out vec4 out_colour;
+out vec4 out_color;
 
 uniform sampler2D particleTexture;
 
 void main(void){
 
-	out_colour = texture(particleTexture, textureCoords);
+	vec4 color = texture(particleTexture, textureCoords);
+	vec4 nextColor = texture(particleTexture, nextTextureCoords);
+
+	out_color = mix(color, nextColor, blend);
 
 }

@@ -2,15 +2,25 @@
 
 in vec2 position;
 
-out vec2 textureCoords 
+out vec2 textureCoords;
+out vec2 nextTextureCoords;
+out blend;
 
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
 
+uniform vec2 textureOffset;
+uniform vec2 nextTextureOffset;
+uniform vec2 textureCoordInfo;
+
 void main(void) {
 
-	textureCoords = position + vec2(0.5, 0.5);
-	textureCoords.y = 1.0 - textureCorods.y;
+	vec2 coordinates = position + vec2(0.5, 0.5);
+	coordinates.y = 1.0 - coordinates.y;
+	coordinates /= texCoordInfo.x;
+	textureCoords = coordinates + textureOffset;
+	nextTextureCoords = coordinates + nextTextureOffset;
+	blend = texCoordInfo.y;
 
 	gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 0.0, 1.0);
 

@@ -142,9 +142,9 @@ public class mainGameLoop {
 		waterTile water = new waterTile(0, 0, 0);
 		waters.add(water);
 		
-		particleTexture ParticleTexture = new particleTexture(Loader.loadTexture("particleStar", -0.2f), 1);
+		particleTexture ParticleTexture = new particleTexture(Loader.loadTexture("cosmic", -0.2f), 4);
 		
-		particleSystem system = new particleSystem(ParticleTexture, 40, 10, 0.1f, 1, 1, 1.6f);	
+		particleSystem system = new particleSystem(ParticleTexture, 40, 10, 0.1f, 1, 1.6f);	
 		system.setLifeError(0.1f);
 		system.setSpeedError(0.2f);
 		system.setScaleError(0.5f);
@@ -157,7 +157,7 @@ public class mainGameLoop {
 			picker.update();
 			
 			
-			particleMaster.update();
+			particleMaster.update(Camera);
 			
 			GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 			
