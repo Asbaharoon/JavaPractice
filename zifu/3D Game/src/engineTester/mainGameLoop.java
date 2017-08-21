@@ -142,7 +142,7 @@ public class mainGameLoop {
 		waterTile water = new waterTile(0, 0, 0);
 		waters.add(water);
 		
-		particleTexture ParticleTexture = new particleTexture(Loader.loadTexture("cosmic", -0.2f), 4);
+		particleTexture ParticleTexture = new particleTexture(Loader.loadTexture("cosmic", -0.2f), 4, false);
 		
 		particleSystem system = new particleSystem(ParticleTexture, 40, 10, 0.1f, 1, 1.6f);	
 		system.setLifeError(0.1f);

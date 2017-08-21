@@ -9,7 +9,7 @@ import org.lwjgl.opengl.PixelFormat;
 
 public class displayManager {
 
-	static ContextAttribs attribs = new ContextAttribs(3,2).withForwardCompatible(true).withProfileCore(true);
+	static ContextAttribs attribs = new ContextAttribs(3,3).withForwardCompatible(true).withProfileCore(true);
 	
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;	
