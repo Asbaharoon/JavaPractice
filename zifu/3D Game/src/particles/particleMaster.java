@@ -36,6 +36,7 @@ public class particleMaster {
 					}
 				}
 			}
+		insertionSort.sortHighToLow(list);
 		}
 	}
 	
