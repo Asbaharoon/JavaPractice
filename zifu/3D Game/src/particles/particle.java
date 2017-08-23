@@ -23,10 +23,19 @@ public class particle {
 	private Vector2f nextTextureOffset = new Vector2f();
 	private float blend;
 	
+	private Vector3f reusableChange = new Vector3f();
+	
 	private float age = 0;
 	private float distance;
 	
-	public particle(particleTexture texture, Vector3f position, Vector3f velocity, float gravity, float lifespan, float rotation, float scale) {
+	private boolean alive = false;
+	
+	public particle() {
+		
+	}
+	
+	public void setActive(particleTexture texture, Vector3f position, Vector3f velocity, float gravity, float lifespan, float rotation, float scale) {
+		alive = true;
 		this.texture = texture;
 		this.position = position;
 		this.velocity = velocity;
@@ -34,8 +43,8 @@ public class particle {
 		this.lifespan = lifespan;
 		this.rotation = rotation;
 		this.scale = scale;
-		particleMaster.addParticle(this);
 	}
+	
 	
 	public float getDistance() {
 		return distance;
@@ -71,10 +80,10 @@ public class particle {
 	
 	protected boolean update(camera Camera) {
 		velocity.y += player.GRAVITY * gravity * displayManager.getFrameTimeSeconds();
-		Vector3f change = new Vector3f(velocity);
-		change.scale(displayManager.getFrameTimeSeconds());
-		Vector3f.add(change, position, position);
-		distance = Vector3f.sub(Camera.getPosition(), position, null).lengthSquared();
+		reusableChange.set(velocity);
+		reusableChange.scale(displayManager.getFrameTimeSeconds());
+		Vector3f.add(reusableChange, position, position);
+		distance = Vector3f.sub(Camera.getPosition(), position, null).lengthSquared()	;
 		updateTextureCoordInfo();
 		age += displayManager.getFrameTimeSeconds();
 		return age < lifespan;
@@ -96,9 +105,5 @@ public class particle {
 		int row = index / texture.getNumberOfRows();
 		offset.x = (float)column / texture.getNumberOfRows();
 		offset.y = (float)row / texture.getNumberOfRows();	
-	}
-	
-	
-	
-	
+	}	
 }
