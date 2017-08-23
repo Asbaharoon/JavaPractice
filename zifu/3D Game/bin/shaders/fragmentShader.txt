@@ -13,7 +13,8 @@ uniform vec3 lightColor[4];
 uniform vec3 attenuation[4];
 uniform float shineDamper;
 uniform float reflectivity;
-uniform vec3 skyColor;void main(void) {
+uniform vec3 skyColor;
+void main(void) {
 	
 	vec3 unitNormal	= normalize(surfaceNormal);
 	vec3 unitVectorToCamera = normalize(toCameraVector);
