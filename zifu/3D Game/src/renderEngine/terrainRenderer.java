@@ -30,11 +30,14 @@ public class terrainRenderer {
 		shader.stop();
 	}	
 	
-	public void render(List<terrain> terrains) {
+	public void render(List<terrain> terrains, Matrix4f toShadowMapSpace, float distance, float transition) {
+		shader.loadToShadowSpaceMatrix(toShadowMapSpace);
+		shader.loadShadowDistance(distance);
+		shader.loadTransitionDistace(transition);
 		for(terrain Terrain: terrains) {
 			prepareTerrain(Terrain);
 			loadModelMatrix(Terrain);
-			GL11.glDrawElements(GL11.GL_TRIANGLES, Terrain.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT,0);
+			GL11.glDrawElements(GL11.GL_TRIANGLES, Terrain.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 			unbindTexturedModel();
 		}
 

@@ -40,7 +40,7 @@ public class terrain {
 		this.blendMap = blendMap;
 		this.x = gridX * SIZE;
 		this.z = gridZ * SIZE;
-		generator = new heightsGenerator(gridX, gridZ, VERTEX_COUNT, SEED);
+		generator = new heghtsGenerator(gridX, gridZ, VERTEX_COUNT, SEED);
 		this.model = generateTerrain(Loader, heightMap);	
 	}
 	

@@ -52,7 +52,11 @@ public class mainGameLoop {
 		displayManager.openDisplay();
 		loader Loader = new loader(); 
 		textMaster.initiate(Loader);
-		masterRenderer renderer = new masterRenderer(Loader);
+		rawModel bunnyModel = OBJLoader.loadOBJFile("person", Loader);
+		texturedModel bunny = new texturedModel(bunnyModel, new modelTexture(Loader.loadTexture("white", -0.4f)));
+		player Player = new player(bunny, new Vector3f(100, 5, -50), 0, 0, 0, 1);
+		camera Camera = new camera(Player);
+		masterRenderer renderer = new masterRenderer(Loader, Camera);
 		particleMaster.initiate(Loader, renderer.getProjectionMatrix());
 		
 		fontType font = new fontType(Loader.loadTexture("candara", 0), new File("res/candara.fnt"));
@@ -105,32 +109,17 @@ public class mainGameLoop {
 		Texture.setShineDamper(100);
 		Texture.setReflectivity(1);
 		
-		entity Entity = new entity(TexturedModel, new Vector3f(10,0,-2),0,0,0,1);
-		light Light = new light(new Vector3f(3000, 2000, 2000), new Vector3f(1f, 1f, 1f), new Vector3f(1, 0.2f, 0.5f));
+		entity Entity = new entity(TexturedModel, new Vector3f(10, 0, -2), 0, 0, 0, 1);
+		light Light = new light(new Vector3f(10000, 15000, -10000), new Vector3f(1.3f, 1.3f, 1.3f), new Vector3f(1, 0.2f, 0.5f));
 		List<light> Lights = new ArrayList<light>();
-		Lights.add(Light);
-		Lights.add(new light(new Vector3f(0, 0, 0), new Vector3f(0.6f, 0.6f, 0.2f), new Vector3f(1, 0.1f, 0.6f)));
-		Lights.add(new light(new Vector3f(-2, 0, 2), new Vector3f(0.6f, 0.6f, 0.2f), new Vector3f(1, 0.6f, 0.4f)));
-		Lights.add(new light(new Vector3f(6, 0, -4), new Vector3f(0.6f, 0.6f, 0.2f), new Vector3f(1, 0.7f, 0.3f)));
-		
+		Lights.add(Light);		
 		terrain Terrain = new terrain(0, -1, Loader,texturePack, blendMap, "heightmap");	
 		List<terrain> terrains = new ArrayList<terrain>();
-		
-	
-		
-		rawModel bunnyModel = OBJLoader.loadOBJFile("person", Loader);
-		texturedModel bunny = new texturedModel(bunnyModel, new modelTexture(Loader.loadTexture("white", -0.4f)));
-			
-		player Player = new player(bunny, new Vector3f(100, 5, -50), 0, 0, 0, 1);
-	
-		camera Camera = new camera(Player);
-				
+						
 		List<GUITexture> guis = new ArrayList<GUITexture>();
 		
 		GUITexture gui = new GUITexture(Loader.loadTexture("thinmatrix", -0.4f), new Vector2f(0.5f, 0.5f), 0, 0, new Vector2f(0.25f, 0.25f));
-		
-		guis.add(gui);
-		
+		guis.add(gui);		
 		GUIRenderer guiRenderer = new GUIRenderer(Loader);
 	
 		mousePicker picker = new mousePicker(Camera, renderer.getProjectionMatrix(), Terrain);
@@ -155,12 +144,10 @@ public class mainGameLoop {
 			Player.move(Terrain);
 			Camera.move();
 			picker.update();
-			
-			
 			particleMaster.update(Camera);
 			
+			renderer.renderShadowMap(entities, Light);
 			GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
-			
 			fbos.bindReflectionFrameBuffer();
 			float distance = 2 * (Camera.getPosition().y - water.getHeight());
 			Camera.getPosition().y -= distance;
