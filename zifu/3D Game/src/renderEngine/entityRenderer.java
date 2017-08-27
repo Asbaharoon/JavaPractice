@@ -22,7 +22,8 @@ public class entityRenderer {
 		shader.stop();
 	}
 	
-	public void render(Map<texturedModel, List<entity>> entities) {
+	public void render(Map<texturedModel, List<entity>> entities, Matrix4f toShadowSpace) {
+		shader.loadToShadowSpaceMatrix(toShadowSpace);
 		for(texturedModel model: entities.keySet()) {
 			prepareTexturedModel(model);
 			List<entity> batch = entities.get(model);

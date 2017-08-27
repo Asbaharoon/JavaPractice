@@ -21,8 +21,9 @@ public class displayManager {
 	public static void openDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
-			Display.create(new PixelFormat(), attribs);
+			Display.create(new PixelFormat().withSamples(8).withDepthBits(24), attribs);
 			Display.setTitle("Display");
+			GL11.glEnable(GL13.GL_MULTISAMPLE);
 		} catch(LWJGLException E){
 			E.printStackTrace();
 		}	 

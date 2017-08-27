@@ -40,7 +40,7 @@ public class terrain {
 		this.blendMap = blendMap;
 		this.x = gridX * SIZE;
 		this.z = gridZ * SIZE;
-		generator = new heghtsGenerator(gridX, gridZ, VERTEX_COUNT, SEED);
+		generator = new heightsGenerator(gridX, gridZ, VERTEX_COUNT, SEED);
 		this.model = generateTerrain(Loader, heightMap);	
 	}
 	
@@ -83,10 +83,9 @@ public class terrain {
 		}
 		return answer;
 	}
+	
 	private rawModel generateTerrain(loader Loader, String heightMap){
-		
-		heightsGenerator generator = new heightsGenerator();
-		
+		heightsGenerator generator = new heightsGenerator((int) (getX() / SIZE), (int) (getZ() / SIZE), VERTEX_COUNT, SEED);	
 		BufferedImage image = null;
 		try {
 			image = ImageIO.read(new File("res/" + heightMap + ".png"));
@@ -132,6 +131,7 @@ public class terrain {
 				indices[pointer++] = bottomRight;
 			}
 		}
+		return Loader.loadToVAO(vertices, textureCoords, normals, indices);
 	}
 	
 	private Vector3f calculateNormals(int x, int z, heightsGenerator generator) {

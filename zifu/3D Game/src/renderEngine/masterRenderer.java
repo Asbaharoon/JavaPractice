@@ -94,7 +94,7 @@ public class masterRenderer {
 		shader.loadSkyColor(RED, GREEN, BLUE);
 		shader.loadLights(Lights);
 		shader.loadViewMatrix(Camera);
-		Renderer.render(entities);
+		Renderer.render(entities, shadowMapRenderer.getToShadowMapSpaceMatrix());
 		shader.stop();
 		normalMapRenderer.render(entities, clipPlane, Lights, Camera);
 		terrainShader.start();
@@ -102,7 +102,7 @@ public class masterRenderer {
 		terrainShader.loadSkyColor(RED, GREEN, BLUE);
 		terrainShader.loadLights(Lights);
 		terrainShader.loadViewMatrix(Camera);
-		terrainRenderer.render(terrains, shadowMapRenderer.getToShadowMapSpaceMatrix(), 150, 10);
+		terrainRenderer.render(terrains, shadowMapRenderer.getToShadowMapSpaceMatrix(), 150, 10, 4096);
 		terrainShader.stop();
 		terrains.clear();
 		entities.clear();

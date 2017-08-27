@@ -30,10 +30,11 @@ public class terrainRenderer {
 		shader.stop();
 	}	
 	
-	public void render(List<terrain> terrains, Matrix4f toShadowMapSpace, float distance, float transition) {
+	public void render(List<terrain> terrains, Matrix4f toShadowMapSpace, float distance, float transition, float shadowMapSize) {
 		shader.loadToShadowSpaceMatrix(toShadowMapSpace);
 		shader.loadShadowDistance(distance);
 		shader.loadTransitionDistace(transition);
+		shader.loadMapSize(shadowMapSize);
 		for(terrain Terrain: terrains) {
 			prepareTerrain(Terrain);
 			loadModelMatrix(Terrain);
@@ -80,5 +81,4 @@ public class terrainRenderer {
 		Matrix4f transformationMatrix = math.createTransformationMatrix(new Vector3f(Terrain.getX(), 0, Terrain.getZ()), 0, 0, 0, 1);
 		shader.loadTransformationMatrix(transformationMatrix);	
 	}
-
 }
