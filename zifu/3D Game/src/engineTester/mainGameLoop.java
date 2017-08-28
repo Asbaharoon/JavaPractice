@@ -22,6 +22,9 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import OBJConverter.OBJFileLoader;
+import OBJConverter.modelData;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +42,6 @@ import guis.GUITexture;
 import models.rawModel;
 import models.texturedModel;
 import normalMappingOBJConverter.normalMappedOBJLoader;
-import objConverter.OBJFileLoader;
-import objConverter.modelData;
 import particles.particle;
 import particles.particleMaster;
 import particles.particleSystem;

@@ -1,11 +1,6 @@
-/shadows/
-/engineTester/
-/renderEngine/
-/shaders/
+/OBJConverter/
+/res/
 /terrains/
-/fontRendering/
-/guis/
-/normalMappingRenderers/
-/particles/
-/skybox/
+/textures/
+/toolbox/
 /water/

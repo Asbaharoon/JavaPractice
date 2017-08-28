@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import models.rawModel;
@@ -16,14 +17,8 @@ import models.rawModel;
 public class OBJLoader {
 
 	public static rawModel loadOBJFile(String fileName, loader Loader) {
-		FileReader fr = null;
-		try {
-		fr = new FileReader(new File("res/" + fileName + ".obj"));
-		} catch(FileNotFoundException e) {
-			System.err.println("Could not load file!");
-			e.printStackTrace();
-		}
-		BufferedReader reader = new BufferedReader(fr);
+		InputStreamReader isr = new InputStreamReader(Class.class.getResourceAsStream("/res/" + fileName + ".obj"));
+		BufferedReader reader = new BufferedReader(isr);
 		
 		String line;
 		List<Vector3f> vertices = new ArrayList<Vector3f>();
