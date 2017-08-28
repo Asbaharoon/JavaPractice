@@ -60,7 +60,7 @@ public class mainGameLoop {
 		masterRenderer renderer = new masterRenderer(Loader, Camera);
 		particleMaster.initiate(Loader, renderer.getProjectionMatrix());
 		
-		fontType font = new fontType(Loader.loadTexture("candara", 0), new File("res/candara.fnt"));
+		fontType font = new fontType(Loader.loadTexture("candara", 0), "res/candara.fnt");
 		GUIText text = new GUIText("My text", 3, font, new Vector2f(0.5f, 0.5f), 0.5f, true);
 		text.setColor(0, 1, 0.2f);
 		

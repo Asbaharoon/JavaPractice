@@ -11,7 +11,6 @@ public class audioTester {
 		
 		int buffer = audioMaster.loadSound("audio/bounce.wav");
 		source source = new source();
-		
 	
 		char Char = ' ';
 		while(Char != 'q' ) {

@@ -5,7 +5,8 @@ package OBJConverter;
 	import java.io.FileNotFoundException;
 	import java.io.FileReader;
 	import java.io.IOException;
-	import java.util.ArrayList;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 	import java.util.List;
 	 
 	import org.lwjgl.util.vector.Vector2f;
@@ -16,14 +17,8 @@ package OBJConverter;
 	    private static final String RES_LOC = "res/";
 	 
 	    public static modelData loadOBJ(String objFileName) {
-	        FileReader isr = null;
-	        File objFile = new File(RES_LOC + objFileName + ".obj");
-	        try {
-	            isr = new FileReader(objFile);
-	        } catch (FileNotFoundException e) {
-	            System.err.println("File not found in res; don't use any extention");
-	        }
-	        BufferedReader reader = new BufferedReader(isr);
+	    	InputStreamReader isr = new InputStreamReader(Class.class.getResourceAsStream("/res/" + objFileName + ".obj"));
+	    	BufferedReader reader = new BufferedReader(isr);
 	        String line;
 	        List<vertex> vertices = new ArrayList<vertex>();
 	        List<Vector2f> textures = new ArrayList<Vector2f>();

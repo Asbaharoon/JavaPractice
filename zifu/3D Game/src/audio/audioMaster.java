@@ -39,6 +39,5 @@ public class audioMaster {
 			AL10.alDeleteBuffers(buffer);
 		}
 		AL.destroy(); 
-	}
-	
+		}
 }

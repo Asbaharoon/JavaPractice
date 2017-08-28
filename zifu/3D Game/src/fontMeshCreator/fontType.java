@@ -7,7 +7,7 @@ public class fontType {
     private int textureAtlas;
     private textMeshCreator loader;
  
-    public fontType(int textureAtlas, File fontFile) {
+    public fontType(int textureAtlas, String fontFile) {
         this.textureAtlas = textureAtlas;
         this.loader = new textMeshCreator(fontFile);
     }

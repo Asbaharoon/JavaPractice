@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
  
@@ -35,7 +36,7 @@ public class metaFile {
     private BufferedReader reader;
     private Map<String, String> values = new HashMap<String, String>();
  
-    protected metaFile(File file) {
+    protected metaFile(String file) {
         this.aspectRatio = (double) Display.getWidth() / (double) Display.getHeight();
         openFile(file);
         loadPaddingData();
@@ -93,9 +94,10 @@ public class metaFile {
         }
     }
  
-    private void openFile(File file) {
+    private void openFile(String file) {
         try {
-            reader = new BufferedReader(new FileReader(file));
+            InputStreamReader isr = new InputStreamReader(Class.class.getResourceAsStream("/res/"  + file + ".fnt"));
+            reader = new BufferedReader(isr);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Couldn't read font meta file!");
