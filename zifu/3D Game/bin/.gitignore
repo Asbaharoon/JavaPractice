@@ -3,3 +3,9 @@
 /renderEngine/
 /shaders/
 /terrains/
+/fontRendering/
+/guis/
+/normalMappingRenderers/
+/particles/
+/skybox/
+/water/

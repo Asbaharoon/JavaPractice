@@ -51,7 +51,5 @@ public class displayManager {
 
 	private static long getCurrentTime() {
 		return Sys.getTime() * 1000 / Sys.getTimerResolution();
-	}
-	
+	}	
 }
-

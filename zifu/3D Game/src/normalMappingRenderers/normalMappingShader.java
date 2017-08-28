@@ -14,8 +14,8 @@ public class normalMappingShader extends shaderProgram{
 
 	private static final int MAX_LIGHTS = 4;
      
-    private static final String VERTEX_FILE = "src/normalMappingRenderers/normalMapVertexShader.txt";
-    private static final String FRAGMENT_FILE = "src/normalMappingRenderers/normalMapFragmentShader.txt";
+    private static final String VERTEX_FILE = "/normalMappingRenderers/normalMapVertexShader.txt";
+    private static final String FRAGMENT_FILE = "/normalMappingRenderers/normalMapFragmentShader.txt";
      
     private int location_transformationMatrix;
     private int location_projectionMatrix;
