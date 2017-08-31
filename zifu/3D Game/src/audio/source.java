@@ -8,12 +8,15 @@ public class source {
 	
 	public source() {
 		sourceID = AL10.alGenSources();
+		AL10.alSourcef(sourceID, AL10.AL_ROLLOFF_FACTOR, 6);
+		AL10.alSourcef(sourceID, AL10.AL_REFERENCE_DISTANCE, 6);
+		AL10.alSourcef(sourceID, AL10.AL_MAX_DISTANCE, 50);
 	}
 
 	public void play(int buffer) {
 		stop();
 		AL10.alSourcei(sourceID, AL10.AL_BUFFER, buffer);
-		continuePlaying();
+		continuePlaying(); 
 	}
 	
 	public void delete() {
