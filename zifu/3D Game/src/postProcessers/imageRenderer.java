@@ -4,17 +4,17 @@ import org.lwjgl.opengl.GL11;
  
 public class imageRenderer {
  
-    private FBO fbo;
+    public FBO fbo;
  
-    protected imageRenderer(int width, int height) {
+    public imageRenderer(int width, int height) {
         this.fbo = new FBO(width, height, FBO.NONE);
     }
  
-    protected imageRenderer() {
+    public imageRenderer() {
     	
     }
  
-    protected void renderQuad() {
+    public void renderQuad() {
         if (fbo != null) {
             fbo.bindFrameBuffer();
         }
@@ -25,11 +25,11 @@ public class imageRenderer {
         }
     }
  
-    protected int getOutputTexture() {
+    public int getOutputTexture() {
         return fbo.getColourTexture();
     }
  
-    protected void cleanUp() {
+    public void cleanUp() {
         if (fbo != null) {
             fbo.cleanUp();
         }
