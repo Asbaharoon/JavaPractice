@@ -46,6 +46,8 @@ import particles.particle;
 import particles.particleMaster;
 import particles.particleSystem;
 import particles.particleTexture;
+import postProcessers.FBO;
+import postProcessers.postProcessing;
 
 public class mainGameLoop {
 
@@ -140,6 +142,8 @@ public class mainGameLoop {
 		system.setScaleError(0.5f);
 		system.randomizeRotation();
 		
+		FBO fbo = new FBO(Display.getWidth(), Display.getHeight(), FBO.DEPTH_RENDER_BUFFER);
+		postProcessing.init(Loader);
 		
 		while (!Display.isCloseRequested()) {
 			Player.move(Terrain);
@@ -152,7 +156,7 @@ public class mainGameLoop {
 			fbos.bindReflectionFrameBuffer();
 			float distance = 2 * (Camera.getPosition().y - water.getHeight());
 			Camera.getPosition().y -= distance;
-			Camera.invertPitch();
+			Camera.invertPitch();	
 			renderer.renderScene(entities, normalMapEntities, terrains, Lights, Camera, new Vector4f(0, 1f, 0, -water.getHeight() + 1f));
 			Camera.getPosition().y += distance;
 			Camera.invertPitch();
@@ -162,17 +166,23 @@ public class mainGameLoop {
 		
 			GL11.glDisable(GL30.GL_CLIP_DISTANCE0); 
 			fbos.unbindCurrentFrameBuffer();
+			
+			fbo.bindFrameBuffer();	
 			Vector3f terrainPoint  = picker.getCurrentTerrainPoint();
 			renderer.renderScene(entities, normalMapEntities, terrains, Lights, Camera, new Vector4f(0, -1f, 0, 1));
 			WaterRenderer.render(waters, Camera, Light);
-			
 			particleMaster.renderParticles(Camera);
+			
+			fbo.unbindFrameBuffer();
+			postProcessing.doPostProcessing(fbo.getColourTexture());
 			
 			guiRenderer.render(guis);
 			displayManager.updateDisplay();
 			textMaster.render(); 
 		}
 		
+		postProcessing.cleanUp();
+		fbo.cleanUp();
 		particleMaster.cleanUp();
 		textMaster.cleanUp();
 		fbos.cleanUp();

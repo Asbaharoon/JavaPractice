@@ -11,14 +11,16 @@ public class postProcessing {
      
     private static final float[] POSITIONS = { -1, 1, -1, -1, 1, 1, 1, -1 };    
     private static rawModel quad;
- 
+    private static contrastChanger contrastChanger;
+    
     public static void init(loader loader){
         quad = loader.loadToVAO(POSITIONS, 2);
+        contrastChanger = new contrastChanger();
     }
      
-    public static void doPostProcessing(int colourTexture){
+    public static void doPostProcessing(int colorTexture){
         start();
-
+        contrastChanger.render(colorTexture);
         end();
     }
      
